@@ -17,6 +17,8 @@ import Cancel from "./components/pages/Cancell";
 import { OrderPage } from "./components/pages/OrderPage";
 import Footer from "./components/Sections/Footer";
 import HomePage from "./components/pages/HomePage";
+import { Loader2 } from "lucide-react";
+import ProductDetailPage from "./components/pages/ProductDetailPage";
 
 
 function Layout(): JSX.Element {
@@ -44,7 +46,7 @@ function Layout(): JSX.Element {
       authListener?.subscription?.unsubscribe();
     };
   }, []);
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="flex w-full h-[100vh] justify-center items-center text-gray-300 "><Loader2 className="h-10 w-10"/></p>;
   return (
     <div className="bg-[#E3E6E6] min-h-screen w-full relative">
       <Toaster richColors position="bottom-center" />
@@ -89,7 +91,7 @@ function AuthLayout(): JSX.Element {
   }, []);
 
   if (loading) {
-    return <p>Loading.....</p>;
+    return <p className="flex w-full h-[100vh] justify-center items-center text-gray-300 "><Loader2 className="h-10 w-10"/></p>;
   }
   return (
     <div className="bg-[#E3E6E6] min-h-screen w-full relative">
@@ -116,6 +118,7 @@ function App(): JSX.Element {
           <Route path="category/:id" element={<CategoryPage />} />
           <Route path="search" element={<SearchResults id={""} />} />
           <Route path="cart" element={<CartPage />} />
+           <Route path="product/:id" element={<ProductDetailPage />} />
           <Route path="ProductPage" element={<ProductPage />} />
           <Route path="success" element={<Success />} />
           <Route path="cancel" element={<Cancel />} />

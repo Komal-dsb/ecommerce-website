@@ -160,14 +160,14 @@ export default function CartPage() {
   if (loading) {
     return (
       <div className="p-6 max-w-3xl mx-auto text-center">
-        <Loader2 className="animate-spin inline-block w-6 h-6 mr-2" />
-        Loading your cart...
+        <Loader2 className="animate-spin inline-block text-gray-300 w-20 h-20 mr-2" />
+       
       </div>
     );
   }
 
   return (
-    <div className="p-6 max-w-4xl mx-auto h-[100vh]">
+    <div className="p-6 max-w-4xl mx-auto h-auto">
       <h2 className="text-4xl font-bold mb-10 text-center text-zinc-800">
         Your Cart
       </h2>

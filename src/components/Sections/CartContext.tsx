@@ -1,11 +1,13 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "@/supabaseClient";
+import { toast } from "sonner";
 
 type Product = {
   id: string;
   name: string;
   price: number;
   image_url: string;
+ 
 };
 
   export type CartItem = {
@@ -85,48 +87,56 @@ export const CartProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
-  const addToCart = async (userId: string, productId: string) => {
-   
-    const { data: existing } = await supabase
+ const addToCart = async (userId: string, productId: string) => {
+  // Step 1: Fetch live stock from database
+  const { data: product, error: productError } = await supabase
+    .from("product")
+    .select("price, name, stock")
+    .eq("id", productId)
+    .single();
+
+  if (productError || !product) {
+    console.error("Failed to fetch product:", productError);
+    return;
+  }
+
+  const { stock, price, name } = product;
+
+  // Step 2: Check if item already in cart
+  const { data: existing } = await supabase
+    .from("cart")
+    .select("id, quantity")
+    .eq("user_id", userId)
+    .eq("product_id", productId)
+    .maybeSingle();
+
+  const currentQty = existing?.quantity ?? 0;
+
+  // Step 3: Stop if it will exceed stock
+  if (currentQty >= stock) {
+    toast.error("Cannot add more. Stock limit reached.");
+    return;
+  }
+
+  // Step 4: Add or update cart item
+  if (existing) {
+    await supabase
       .from("cart")
-      .select("id, quantity")
-      .eq("user_id", userId)
-      .eq("product_id", productId)
-      .maybeSingle();
+      .update({ quantity: currentQty + 1 })
+      .eq("id", existing.id);
+  } else {
+    await supabase.from("cart").insert({
+      user_id: userId,
+      product_id: productId,
+      quantity: 1,
+      price,
+      name,
+    });
+  }
 
-    if (existing) {
-    
-      const { error } = await supabase
-        .from("cart")
-        .update({ quantity: existing.quantity + 1 })
-        .eq("id", existing.id);
-
-      if (!error) fetchCart(userId);
-    } else {
-      // Get product price before inserting into cart
-      const { data: product, error: productError } = await supabase
-        .from("product")
-        .select("price, name") 
-        .eq("id", productId)
-        .single();
-
-      if (productError || !product) {
-        console.error("Failed to fetch product price:", productError);
-        return;
-      }
-
-      // Insert new cart item with product price
-      const { error } = await supabase.from("cart").insert({
-        user_id: userId,
-        product_id: productId,
-        quantity: 1,
-        price: product.price,
-        name: product.name,
-      });
-
-      if (!error) fetchCart(userId);
-    }
-  };
+  fetchCart(userId);
+    toast.success("Added to cart!");
+};
 
   const updateQuantity = async (
     cartId: string,

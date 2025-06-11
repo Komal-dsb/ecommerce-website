@@ -5,7 +5,7 @@ import { useCart } from "../Sections/CartContext";
 import { supabase } from "@/supabaseClient";
 import { useEffect, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
-import { toast } from "sonner";
+import { useNavigate } from "react-router";
 
 type ProductCardProps = {
   id: string;
@@ -28,6 +28,7 @@ export function ProductCard({
 }: ProductCardProps) {
   const [session, setSession] = useState<Session | null>(null);
   const { addToCart } = useCart();
+  const navigate = useNavigate();
 
   const userId = session?.user?.id;
 
@@ -55,11 +56,13 @@ export function ProductCard({
     }
 
     await addToCart(userId, id);
-    toast.success("Added to cart!");
   };
 
   return (
-    <Card className="rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 p-3">
+    <Card
+      onClick={() => navigate(`/product/${id}`)}
+      className="rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 p-3"
+    >
       <div className="relative aspect-[5/3] w-full overflow-hidden rounded-xl bg-muted p-2">
         <img
           src={image_url}
@@ -101,7 +104,10 @@ export function ProductCard({
             className={`w-full ${
               stock === 0 ? "cursor-not-allowed opacity-50" : ""
             }`}
-            onClick={handleAdd}
+            onClick={(e) => {
+              handleAdd(); 
+              e.stopPropagation(); 
+            }}
           >
             Add to Cart
           </Button>
