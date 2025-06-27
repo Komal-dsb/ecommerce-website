@@ -34,7 +34,9 @@ const HeroSection: React.FC = () => {
       </h1>
 
       <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 max-w-lg">
-        Explore our wide selection of trendy fashion clothes, thoughtfully designed to showcase your individuality and match your personal style.
+        Browse through our diverse range of meticulously crafted garments,
+        designed to bring out your individuality and cater to your sense of
+        style.
       </p>
 
       <Button
