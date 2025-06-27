@@ -30,13 +30,11 @@ const HeroSection: React.FC = () => {
   <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
     <div className="max-w-2xl">
       <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-black leading-tight mb-6">
-        FIND CLOTHES THAT MATCHES YOUR STYLE
+        FIND TRENDY FASHION CLOTHES THAT MATCH YOUR STYLE
       </h1>
 
       <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-8 max-w-lg">
-        Browse through our diverse range of meticulously crafted garments,
-        designed to bring out your individuality and cater to your sense of
-        style.
+        Explore our wide selection of trendy fashion clothes, thoughtfully designed to showcase your individuality and match your personal style.
       </p>
 
       <Button
