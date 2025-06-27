@@ -4,7 +4,7 @@ import { Button } from "../ui/button";
 import { Card } from "../ui/card";
 import { Star, Tag } from "lucide-react";
 import { useNavigate } from "react-router";
-import { Helmet } from "react-helmet-async";
+
 
 interface Brand {
   id: number;
@@ -163,27 +163,7 @@ const HomePage: React.FC = () => {
   return (
     <div className="min-h-screen bg-white">
 
-      <Helmet>
-  <title>My Ecommerce Store | Best Online Shopping for Electronics,Trendy Fashion, Home & More</title>
-  <meta
-    name="description"
-    content="Discover top deals on electronics, fashion, home essentials, beauty, and sports. Shop online with fast delivery and secure checkout at My Ecommerce Store."
-  />
-  <meta
-    name="keywords"
-    content="online shopping, buy electronics online, fashion store, home essentials, beauty products, sports equipment, best online deals, top ecommerce site, free shipping, secure checkout"
-  />
-   <meta name="robots" content="index, follow" />
-     <meta property="og:title" content="Shop Top Deals | My Ecommerce Store" />
-  <meta property="og:description" content="Discover exclusive offers on electronics, fashion, home essentials, beauty, and sports. Free shipping & secure checkout!" />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://ecommerce-website-nine-orpin.vercel.app/" />
-  <meta property="og:image" content="https://ecommerce-website-nine-orpin.vercel.app/img_rectangle_2.png" />
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Shop Top Deals | My Ecommerce Store" />
-  <meta name="twitter:description" content="Shop the best online deals on electronics, fashion, home, beauty, and sports. Free shipping & secure checkout!" />
-  <meta name="twitter:image" content="https://ecommerce-website-nine-orpin.vercel.app/img_1.svg" />
-</Helmet>
+    
 
       <HeroSection />
 
